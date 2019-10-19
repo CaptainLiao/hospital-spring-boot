@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.san.hospitalsystem.Mapper.DepartmentMapper">
+    <resultMap id="department" type="Department">
+        <id column="id" property="id" />
+        <result column="parentId" property="parentId" />
+        <result column="catName" property="catName" />
+        <collection property="subDepartments" javaType="ArrayList" column="id" select="getSubById" />
+    </resultMap>
+
+
+    <select id="getDepartment" resultMap="department">
+        select id, parentId, catName
+        from departments_category
+        where 1 = 1
+        <choose>
+            <when test="id == null || id == 0">
+                and id = 1
+            </when>
+            <otherwise>
+                and id = #{id}
+            </otherwise>
+        </choose>
+    </select>
+
+    <select id="getSubById" resultMap="department">
+        select id, parentId, catName
+        from departments_category
+        where parentId = #{id}
+    </select>
+
+
+    <select id="getDoctorsByDepartmentId" resultType="com.san.hospitalsystem.entity.Doctor">
+        select * from doctors where departmentId = #{id}
+    </select>
+
+    <select id="getDoctorById" resultType="com.san.hospitalsystem.entity.Doctor">
+        select
+            doctors.id as id,
+            doctors.name as name,
+            doctors.intro as intro,
+            doctors.title as title,
+
+            depart.catName as departmentName,
+            depart.desc as departmentDesc
+        from doctors
+        left join departments_category depart on depart.id = doctors.departmentId
+        where doctors.id = #{id}
+    </select>
+</mapper>
