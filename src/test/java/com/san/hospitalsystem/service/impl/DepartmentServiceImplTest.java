@@ -42,10 +42,4 @@ class DepartmentServiceImplTest {
     // 外科有两个医生
     Assert.assertEquals(2, doctors.size());
   }
-
-  @Test
-  void getDoctorById() {
-    Doctor doctor = departmentService.getDoctorById(1);
-    Assert.assertEquals("张三", doctor.getName());
-  }
 }
