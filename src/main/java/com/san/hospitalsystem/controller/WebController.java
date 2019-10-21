@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @RestController
@@ -31,8 +32,14 @@ public class WebController {
   }
 
   @RequestMapping(value = "/getDoctorById", method = RequestMethod.GET)
-  public ServerResponse<Doctor> getDoctorById(int id) {
+  public ServerResponse<Doctor> getDoctorById(int id, HttpSession session) {
+    session.setAttribute("sessionId", "5156111");
+
+    System.out.println("session");
+    System.out.println(session.getAttribute("sessionId"));
     Doctor doctor = departmentService.getDoctorById(id);
     return ServerResponse.createBySuccess(doctor);
   }
+
+
 }
