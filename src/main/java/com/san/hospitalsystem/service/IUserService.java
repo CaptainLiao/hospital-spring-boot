@@ -1,15 +1,15 @@
 package com.san.hospitalsystem.service;
 
-import com.san.hospitalsystem.entity.Token;
+import com.san.hospitalsystem.common.ServerResponse;
 import com.san.hospitalsystem.entity.User;
 
 public interface IUserService {
-  User register(User user);
-  User updateUser(User user);
+  ServerResponse<User> register(User user);
+  ServerResponse<User> updateUser(User user);
 
-  Token login(User user);
-  boolean logout(User user);
+  ServerResponse<String> login(User user);
+  ServerResponse<Boolean>  logout(User user);
 
-  boolean validSession(String sessionId); // 登录过期了么
-  Token updateSession(String sessionId);
+  ServerResponse<Boolean> validToken(String tokenId); // 登录过期了么
+  ServerResponse<String> updateToken(String tokenId);
 }

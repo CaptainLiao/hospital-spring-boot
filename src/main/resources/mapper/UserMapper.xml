@@ -6,18 +6,24 @@
 
 <mapper namespace="com.san.hospitalsystem.Mapper.UserMapper">
     <insert id="insert" parameterType="com.san.hospitalsystem.entity.User">
-        inset into user(
-            id,
-            username,
-            password,
-            role,
-            avatar,
+        insert into user
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">id,</if>
+            <if test="username != null">username,</if>
+            <if test="username != null">password,</if>
+            <if test="role != null">role,</if>
+            <if test="avatar != null">avatar,</if>
             createTime,
             updateTime
-        )
-        values (
-            #{id}, #{username},#{password}, #{role},
-            #{avatar}, now(), now()
-        )
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="id != null">#{id,jdbcType=INTEGER},</if>
+            <if test="username != null">#{username,jdbcType=VARCHAR},</if>
+            <if test="password != null">#{password,jdbcType=VARCHAR},</if>
+            <if test="role != null">#{role,jdbcType=INTEGER},</if>
+            <if test="avatar != null">${avatar,jdbcType=VARCHAR},</if>
+            now(),
+            now()
+        </trim>
     </insert>
 </mapper>
