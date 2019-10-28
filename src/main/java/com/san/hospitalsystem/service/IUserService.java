@@ -1,10 +1,12 @@
 package com.san.hospitalsystem.service;
 
 import com.san.hospitalsystem.common.ServerResponse;
+import com.san.hospitalsystem.entity.Token;
 import com.san.hospitalsystem.entity.User;
 
 public interface IUserService {
-  ServerResponse<User> register(User user);
+  ServerResponse<Token> register(User user);
+  ServerResponse<User> getUserInfo(String username);
   ServerResponse<User> updateUser(User user);
 
   ServerResponse<String> login(User user);

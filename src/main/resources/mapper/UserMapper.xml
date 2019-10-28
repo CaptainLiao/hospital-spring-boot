@@ -26,4 +26,17 @@
             now()
         </trim>
     </insert>
+
+    <select id="queryUserName" parameterType="string" resultType="integer">
+        select id
+        from user
+        where username = #{username}
+    </select>
+
+    <select id="getUserInfo" parameterType="int" resultType="com.san.hospitalsystem.entity.User">
+        select *
+        from user
+        where id = #{userId}
+    </select>
+
 </mapper>

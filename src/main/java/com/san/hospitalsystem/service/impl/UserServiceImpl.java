@@ -2,6 +2,7 @@ package com.san.hospitalsystem.service.impl;
 
 import com.san.hospitalsystem.Mapper.UserMapper;
 import com.san.hospitalsystem.common.ServerResponse;
+import com.san.hospitalsystem.entity.Token;
 import com.san.hospitalsystem.entity.User;
 import com.san.hospitalsystem.service.IUserService;
 import com.san.hospitalsystem.utils.JWTUtil;
@@ -15,17 +16,26 @@ public class UserServiceImpl implements IUserService {
   private UserMapper userMapper;
 
   @Override
-  public ServerResponse<User> register(User user) {
+  public ServerResponse<Token> register(User user) {
+    Integer userId = userMapper.queryUserName(user.getUsername());
+    if (userId != null) return ServerResponse.createByError("用户名已被他人使用");
+
     String password = MD5Util.MD5EncodeUtf8(user.getPassword());
     user.setPassword(password);
-    System.out.println(user);
     int res = userMapper.insert(user);
+    System.out.println(user + " -> " + res);
     if (res <= 0) return ServerResponse.createByError("注册失败");
 
-    user.setPassword(null);
+    userId = userMapper.queryUserName(user.getUsername());
+    Token token = new Token();
+    token.setTokenId(JWTUtil.create(userId));
+    return ServerResponse.createBySuccess("注册成功", token);
+  }
 
 
-    return ServerResponse.createBySuccess("注册成功", user);
+  @Override
+  public ServerResponse<User> getUserInfo(String username) {
+    return null;
   }
 
   @Override

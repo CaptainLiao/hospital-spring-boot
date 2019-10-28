@@ -7,7 +7,7 @@ import java.util.Date;
 @Data
 public class Token {
   private String tokenId;
-  private int userId;
-  private int status;
+  private Integer userId;
+  private Integer status;
   private Date expiredTime;
 }

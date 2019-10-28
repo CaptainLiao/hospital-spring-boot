@@ -45,12 +45,12 @@ public class ServerResponse<T> implements Serializable {
     return data;
   }
 
-  public static <T> ServerResponse createBySuccess() {
+  public static ServerResponse createBySuccess() {
 
     return new ServerResponse(ResponseCode.SUCCESS.getCode());
   }
 
-  public static <T> ServerResponse createBySuccessMessage(String message) {
+  public static ServerResponse createBySuccessMessage(String message) {
     return new ServerResponse(ResponseCode.SUCCESS.getCode(), message);
   }
 
@@ -64,8 +64,8 @@ public class ServerResponse<T> implements Serializable {
     return new ServerResponse<T>(ResponseCode.ERROR.getCode(), ResponseCode.ERROR.getMessage());
   }
 
-  public static <T> ServerResponse createByError(String message) {
-    return new ServerResponse<T>(ResponseCode.ERROR.getCode(), message);
+  public static ServerResponse createByError(String message) {
+    return new ServerResponse(ResponseCode.ERROR.getCode(), message);
   }
 
   @Override

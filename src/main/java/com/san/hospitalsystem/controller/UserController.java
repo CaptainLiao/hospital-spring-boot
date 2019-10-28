@@ -1,6 +1,7 @@
 package com.san.hospitalsystem.controller;
 
 import com.san.hospitalsystem.common.ServerResponse;
+import com.san.hospitalsystem.entity.Token;
 import com.san.hospitalsystem.entity.User;
 import com.san.hospitalsystem.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +16,7 @@ public class UserController {
   private IUserService userService;
 
   @PostMapping("/register")
-  public ServerResponse<User> register(String username, String password) {
+  public ServerResponse<Token> register(String username, String password) {
     User user = new User();
     user.setUsername(username);
     user.setPassword(password);
