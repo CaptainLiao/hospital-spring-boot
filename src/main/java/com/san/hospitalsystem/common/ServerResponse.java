@@ -33,6 +33,8 @@ public class ServerResponse<T> implements Serializable {
     this.data = data;
   }
 
+
+
   public int getCode() {
     return code;
   }
@@ -66,6 +68,10 @@ public class ServerResponse<T> implements Serializable {
 
   public static ServerResponse createByError(String message) {
     return new ServerResponse(ResponseCode.ERROR.getCode(), message);
+  }
+
+  public static ServerResponse createByError(int code, String message) {
+    return new ServerResponse(code, message);
   }
 
   @Override
