@@ -14,7 +14,7 @@ public class FileUploadController {
 
   @PostMapping("/upload")
   public ServerResponse<String> upload(@RequestParam MultipartFile file) throws IOException {
-    if (file.isEmpty()) return ServerResponse.createByError("上传文件不能为空");
+    if (file.isEmpty()) return ServerResponse.error("上传文件不能为空");
 
     String contentType = file.getContentType();
     String fileName = file.getName();
@@ -26,7 +26,7 @@ public class FileUploadController {
     // 保存文件
     file.transferTo(new File("G://Icons/spring-" + originFileName));
 
-    return ServerResponse.createBySuccessMessage(String.format(
+    return ServerResponse.success(String.format(
           file.getClass().getName() +
           "方式文件上传成功！\n新文件名：%s，文件名:%s,文件类型:%s,文件大小:%s",
           fileName, originFileName, contentType,fileSize

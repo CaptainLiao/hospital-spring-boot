@@ -12,11 +12,11 @@ public class adminController {
 
   @PostMapping(value = "/doctor/add")
   public ServerResponse<Doctor> addDoctor(Doctor doctor) {
-    return ServerResponse.createBySuccess("创建成功", doctor);
+    return ServerResponse.success("创建成功", doctor);
   }
 
   @PostMapping(value = "/doctor/delete")
   public ServerResponse<Integer> deleteDoctor(int doctorId) {
-    return ServerResponse.createBySuccess("删除成功", doctorId);
+    return ServerResponse.success("删除成功", doctorId);
   }
 }

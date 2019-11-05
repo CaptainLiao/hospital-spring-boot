@@ -19,7 +19,7 @@ public class ControllerAdviceProcessor {
       message = businessException.getMessage();
     }
 
-    return ServerResponse.createByError(code, message);
+    return ServerResponse.error(code, message);
   }
 
 }

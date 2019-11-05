@@ -10,7 +10,7 @@ class ServerResponseTest {
 
   @Test
   void createBySuccess() {
-    ServerResponse serverResponse = ServerResponse.createBySuccess();
+    ServerResponse serverResponse = ServerResponse.success();
     System.out.println(serverResponse.toString());
   }
 

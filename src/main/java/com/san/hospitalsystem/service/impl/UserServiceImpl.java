@@ -18,18 +18,18 @@ public class UserServiceImpl implements IUserService {
   @Override
   public ServerResponse<Token> register(User user) {
     Integer userId = userMapper.queryUserName(user.getUsername());
-    if (userId != null) return ServerResponse.createByError("用户名已被他人使用");
+    if (userId != null) return ServerResponse.error("用户名已被他人使用");
 
     String password = MD5Util.MD5EncodeUtf8(user.getPassword());
     user.setPassword(password);
     int res = userMapper.insert(user);
     System.out.println(user + " -> " + res);
-    if (res <= 0) return ServerResponse.createByError("注册失败");
+    if (res <= 0) return ServerResponse.error("注册失败");
 
     userId = userMapper.queryUserName(user.getUsername());
     Token token = new Token();
     token.setTokenId(JWTUtil.create(userId));
-    return ServerResponse.createBySuccess("注册成功", token);
+    return ServerResponse.success("注册成功", token);
   }
 
 
