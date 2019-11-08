@@ -5,6 +5,7 @@ import com.san.hospitalsystem.entity.Department;
 import com.san.hospitalsystem.entity.Doctor;
 import com.san.hospitalsystem.service.IDepartmentService;
 import com.san.hospitalsystem.utils.DSA;
+import com.san.hospitalsystem.utils.PropertyUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,7 @@ public class WebController {
     String nonce = request.getParameter("nonce");//随机数
     String echostr = request.getParameter("echostr");//随机字符串
 
-    String token = "yigedachoubi";
+    String token = PropertyUtil.getProperty("weixin.server.token");
 
     String[] strArray = { token, timestamp, nonce };
     Arrays.sort(strArray);
@@ -55,19 +56,19 @@ public class WebController {
   }
 
   @RequestMapping(value = "/getDepartmentById", method = RequestMethod.GET)
-  public ServerResponse<List<Department>> getDepartmentById(@RequestParam(value = "id", defaultValue = "0") int id) {
+  public ServerResponse getDepartmentById(@RequestParam(value = "id", defaultValue = "0") int id) {
     List<Department> list = departmentService.getDepartment(id);
     return ServerResponse.success(list);
   }
 
   @RequestMapping(value = "/getDoctorsByDepartmentId", method = RequestMethod.GET)
-  public ServerResponse<List<Doctor>> getDoctorsByDepartmentId(int id) {
+  public ServerResponse getDoctorsByDepartmentId(int id) {
     List<Doctor> list = departmentService.getDoctorsByDepartmentId(id);
     return ServerResponse.success(list);
   }
 
   @RequestMapping(value = "/getDoctorById", method = RequestMethod.GET)
-  public ServerResponse<Doctor> getDoctorById(int id, HttpSession session) {
+  public ServerResponse getDoctorById(int id, HttpSession session) {
     session.setAttribute("sessionId", "5156111");
 
     System.out.println("session");

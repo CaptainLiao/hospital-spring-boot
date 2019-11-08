@@ -17,6 +17,6 @@ public class PropertyUtil {
     } catch (IOException e) {
       e.printStackTrace();
     }
-    return value;
+    return value.trim();
   }
 }

@@ -16,9 +16,9 @@ public class UserServiceImpl implements IUserService {
   private UserMapper userMapper;
 
   @Override
-  public ServerResponse<Token> register(User user) {
-    Integer userId = userMapper.queryUserName(user.getUsername());
-    if (userId != null) return ServerResponse.error("用户名已被他人使用");
+  public ServerResponse register(User user) {
+    User u = userMapper.queryUserInfo(user);
+    if (u != null) return ServerResponse.error("用户名已被他人使用");
 
     String password = MD5Util.MD5EncodeUtf8(user.getPassword());
     user.setPassword(password);
@@ -26,26 +26,26 @@ public class UserServiceImpl implements IUserService {
     System.out.println(user + " -> " + res);
     if (res <= 0) return ServerResponse.error("注册失败");
 
-    userId = userMapper.queryUserName(user.getUsername());
     Token token = new Token();
-    token.setTokenId(JWTUtil.create(userId));
+    token.setTokenId(JWTUtil.create(user.getUsername()));
     return ServerResponse.success("注册成功", token);
   }
 
 
   @Override
-  public ServerResponse<User> getUserInfo(String username) {
+  public ServerResponse<User> update(User user) {
     return null;
   }
 
   @Override
-  public ServerResponse<User> updateUser(User user) {
-    return null;
-  }
+  public ServerResponse login(User user) {
+    user.setPassword(MD5Util.MD5EncodeUtf8(user.getPassword()));
+    user = userMapper.queryUserInfo(user);
+    if (user == null) return ServerResponse.error("用户名或密码错误");
 
-  @Override
-  public ServerResponse<String> login(User user) {
-    return null;
+    Token token = new Token();
+    token.setTokenId(JWTUtil.create(user.getUsername()));
+    return ServerResponse.success("登录成功", token);
   }
 
   @Override

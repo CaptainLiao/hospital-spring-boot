@@ -33,10 +33,20 @@
         where username = #{username}
     </select>
 
-    <select id="getUserInfo" parameterType="int" resultType="com.san.hospitalsystem.entity.User">
+    <select id="queryUserInfo" parameterType="com.san.hospitalsystem.entity.User" resultType="com.san.hospitalsystem.entity.User">
         select *
         from user
-        where id = #{userId}
+        <where>
+            <if test="username != null">
+                username=#{username}
+            </if>
+            <if test="password != null">
+                and password=#{password}
+            </if>
+            <if test="id != null and id >= 0">
+                and id=#{id}
+            </if>
+        </where>
     </select>
 
 </mapper>
